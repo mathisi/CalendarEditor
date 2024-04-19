@@ -1,4 +1,4 @@
-language: minimal
+language: shell
 
 services:
   - docker
@@ -7,6 +7,8 @@ before_install:
   - IMGNAME=raplaeditor2:$(date +"%Y%m%d%H%M%S")
   - echo "${IMGNAME}"
   - docker build -t ${IMGNAME} .
+  - docker run --name raplaEditorTest ${IMGNAME}
+  - docker ps -a
 
 script:
 #  - docker run --name raplaEditorTest ${IMGNAME}
@@ -20,5 +22,6 @@ script:
 
 after_success:
   - echo "${DOCKER_PASSWORD}" | docker login -u ${DOCKER_USERNAME} --password-stdin
-  - docker tag raplaeditor2 ${DOCKER_USERNAME}/${IMGNAME}
+  - docker images
+  - docker tag ${IMGNAME} ${DOCKER_USERNAME}/${IMGNAME}
   - docker push ${DOCKER_USERNAME}/${IMGNAME}
