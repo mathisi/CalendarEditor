@@ -1,20 +1,23 @@
 language: minimal
 
+env:
+  - IMGNAME=raplaeditor2:$(date +"%Y%m%d%H%M%S")
+
 services:
   - docker
 
 before_install:
-  - export CURRENT_DATE=$(date +"%Y%m%d%H%M%S")
-  - docker build -t raplaeditor2:$CURRENT_DATE .
+  - echo "${IMGNAME}"
+  - docker build -t ${IMGNAME} .
 
 script:
-  - docker run -d -p 9014:9014 raplaeditor2:$CURRENT_DATE
-  - sleep 90 # Give the container some time to start
+  - docker run -d -p 9014:9014 ${IMGNAME}
+  - sleep 150 # Give the container some time to start
   - status_code=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:9014/TINF22B2)
   - echo "HTTP Status Code: $status_code"
   - if [ $status_code -eq 200 ]; then echo "Request successful"; else echo "Request failed"; exit 1; fi
 
 after_success:
-  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-  - docker tag raplaeditor2 "$DOCKER_USERNAME/raplaeditor2:$CURRENT_DATE"
-  - docker push "$DOCKER_USERNAME/raplaeditor2:$CURRENT_DATE"
+  - echo "${DOCKER_PASSWORD}" | docker login -u ${DOCKER_USERNAME} --password-stdin
+  - docker tag raplaeditor2 ${DOCKER_USERNAME}/${IMGNAME}
+  - docker push ${DOCKER_USERNAME}/${IMGNAME}
