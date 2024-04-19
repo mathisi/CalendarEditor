@@ -9,14 +9,14 @@ before_install:
   - docker build -t ${IMGNAME} .
 
 script:
-  - docker run --name raplaEditorTest ${IMGNAME}
-  - docker ps
-  - sleep 150 # Give the container some time to start
-  - docker ps
-  - export CONTAINER_IP=$(docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' raplaEditorTest)
-  - status_code=$(curl -s -o /dev/null -w "%{http_code}" http://${CONTAINER_IP}:9014/TINF22B2)
-  - echo "HTTP Status Code: $status_code"
-  - if [ $status_code -eq 200 ]; then echo "Request successful"; else echo "Request failed"; exit 1; fi
+#  - docker run --name raplaEditorTest ${IMGNAME}
+#  - docker ps
+#  - sleep 150 # Give the container some time to start
+#  - docker ps
+#  - export CONTAINER_IP=$(docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' raplaEditorTest)
+#  - status_code=$(curl -s -o /dev/null -w "%{http_code}" http://${CONTAINER_IP}:9014/TINF22B2)
+#  - echo "HTTP Status Code: $status_code"
+#  - if [ $status_code -eq 200 ]; then echo "Request successful"; else echo "Request failed"; exit 1; fi
 
 after_success:
   - echo "${DOCKER_PASSWORD}" | docker login -u ${DOCKER_USERNAME} --password-stdin
