@@ -5,10 +5,10 @@ services:
 
 before_install:
   - export CURRENT_DATE=$(date +"%Y%m%d%H%M%S")
-  - docker build -t raplaeditor2:"$CURRENT_DATE" .
+  - docker build -t raplaeditor2:$CURRENT_DATE .
 
 script:
-  - docker run -d -p 9014:9014 raplaeditor2:"$CURRENT_DATE"
+  - docker run -d -p 9014:9014 raplaeditor2:$CURRENT_DATE
   - sleep 5 # Give the container some time to start
   - status_code=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:9014/TINF22B2)
   - echo "HTTP Status Code: $status_code"

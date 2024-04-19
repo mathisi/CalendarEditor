@@ -8,7 +8,7 @@ WORKDIR /app
 COPY . /app
 
 # Install any needed packages specified in requirements.txt
-RUN pip3 install --no-cache-dir -r requirements.txt
+RUN pip3 install --no-cache-dir --progress-bar off -r requirements.txt
 
 # Make port 9013 available to the world outside this container
 EXPOSE 9014
