@@ -7,7 +7,7 @@ before_install:
   - IMGNAME=raplaeditor2:$(date +"%Y%m%d%H%M%S")
   - echo "${IMGNAME}"
   - docker build -t ${IMGNAME} .
-  - docker run --privileged --name raplaEditorTest ${IMGNAME}
+  - docker run -d --privileged --name raplaEditorTest ${IMGNAME}
   - docker ps -a
 
 script:
