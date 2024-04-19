@@ -1,8 +1,5 @@
 language: minimal
 
-env:
-  - IMGNAME=raplaeditor2:$(date +"%Y%m%d%H%M%S")
-
 services:
   - docker
 
@@ -13,7 +10,9 @@ before_install:
 
 script:
   - docker run -d -p 9014:9014 ${IMGNAME}
+  - docker ps
   - sleep 150 # Give the container some time to start
+  - docker ps
   - status_code=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:9014/TINF22B2)
   - echo "HTTP Status Code: $status_code"
   - if [ $status_code -eq 200 ]; then echo "Request successful"; else echo "Request failed"; exit 1; fi
