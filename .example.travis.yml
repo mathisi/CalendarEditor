@@ -1,0 +1,44 @@
+language: node_js
+
+node_js:
+  - '12'
+
+cache: npm
+
+before_install:
+  - cp .env.example .env
+
+install:
+  - npm install
+
+script:
+  - npm test
+
+after_success:
+  - aws s3 cp ./build/ s3://mybucket/build/
+
+jobs:
+  include:
+    - os: linux
+    - os: osx
+
+
+rvm:
+- 2.5
+- 2.2
+gemfile:
+- gemfiles/Gemfile.rails-3.2.x
+- gemfiles/Gemfile.rails-3.0.x
+env:
+- ISOLATED=true
+- ISOLATED=false
+
+jobs:
+  include:
+  - rvm: 2.5
+    gemfile: gemfiles/Gemfile.rails-3.2.x
+    env: ISOLATED=false
+  - rvm: 2.2
+    gemfile: gemfiles/Gemfile.rails-3.0.x
+    env: ISOLATED=true
+    
