@@ -7,7 +7,7 @@ from threading import Lock
 app = Flask(__name__)
 
 calendar_url = "https://rapla.dhbw-karlsruhe.de/rapla?page=ical&user=braun&file=TINF22B2"
-words_to_remove = ["(BV & CG)", "(KI & IS)", "Kommunikations und Netztechnik II", "Mobile Applikationen", "Erklärbare KI", "Evolutionäre Algorithmen", "Gamification", "(WM-A)"]
+words_to_remove = ["(BV & CG)", "(KI & IS)", "(KI & BV)", "Digitale Forensik", "Kommunikations und Netztechnik II", "Mobile Applikationen", "Erklärbare KI", "Evolutionäre Algorithmen", "Gamification", "(WM-A)"]
 
 edited_calendar_data = ""
 lock = Lock()
